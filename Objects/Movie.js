@@ -1,3 +1,8 @@
+import Production from './Production.js';
+import Resource from './Resource.js';
+import Coordinate from './Coordinate.js';
+import GlobalException from 'GlobalException.js';
+
 class Movie extends Production {
 
     #resource;
@@ -14,7 +19,8 @@ class Movie extends Production {
     }
 
     set resource(value) {
-        return this.#resource = value;
+        if (!(value instanceof Resource)) throw new GlobalException("Resource must to be Resource object", "MovieException");
+        this.#resource = value;
     }
 
     get locations() {
@@ -33,3 +39,5 @@ class Movie extends Production {
         return  `Movie: ${this.title}`;
     }
 }
+
+export default Movie;

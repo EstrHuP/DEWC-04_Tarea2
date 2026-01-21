@@ -47,7 +47,7 @@ class Person {
 
     set born(value) {
         if (!value) throw new GlobalException("Born cannot be empty");
-        return this.#born = value;
+        this.#born = value;
     }
 
     get picture() {
@@ -55,10 +55,12 @@ class Person {
     }
 
     set picture(value) {
-        return this.#picture = value;
+        this.#picture = value;
     }
 
     toString() {
         return `${this.#name} ${this.#lastname1} ${this.#lastname2} (${this.#born.toDateString()}) ${this.#picture} `;
     }
 }
+
+export default Person;

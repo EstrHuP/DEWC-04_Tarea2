@@ -15,7 +15,7 @@ class Coordinate {
 
     set latitude(value) {
         if (!value) throw new GlobalException("Latitude cannot be empty", "CoordinateException");
-        return this.#latitude = value;
+        this.#latitude = value;
     }
 
     get longitude() {
@@ -24,10 +24,12 @@ class Coordinate {
 
     set longitude(value) {
         if (!value) throw new GlobalException("Longitude cannot be empty", "CoordinateException");
-        return this.#longitude = value;
+        this.#longitude = value;
     }
 
     toString() {
         return `${this.#longitude.toString()} ${this.#latitude.toString()}`;
     }
 }
+
+export default Coordinate;

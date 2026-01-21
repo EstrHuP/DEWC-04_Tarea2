@@ -15,7 +15,7 @@ class Resource {
 
     set duration(value) {
         if (!value) throw new GlobalException("Duration cannot be empty", "ResourceException");
-        return this.#duration = value;
+        this.#duration = value;
     }
 
     get link() {
@@ -24,10 +24,12 @@ class Resource {
 
     set link(value) {
         if (!value) throw new GlobalException("Link cannot be empty", "ResourceException");
-        return this.#link = value;
+        this.#link = value;
     }
 
     toString() {
         return `${this.#duration.toString()} ${this.#link}`;
     }
 }
+
+export default Resource;

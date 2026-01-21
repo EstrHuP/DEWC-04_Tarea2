@@ -16,7 +16,7 @@ class User {
 
     set username(value) {
         if (!value || typeof value !== "string") throw new GlobalException("Username is mandatory and must be a string", "UserException");
-        return this.#username = value;
+        this.#username = value;
     }
 
     get email() {
@@ -25,7 +25,7 @@ class User {
 
     set email(value) {
         if (!value || typeof value !== "string") throw new GlobalException("Email is mandatory and must be a string", "UserException");
-        return this.#email = value;
+        this.#email = value;
     }
 
     get password() {
@@ -34,10 +34,12 @@ class User {
 
     set password(value) {
         if (!value || typeof value !== "string") throw new GlobalException("Password is mandatory and must be a string");
-        return this.#password = value;
+        this.#password = value;
     }
 
     toString() {
         return `User: ${this.#username} (${this.#email})`;
     }
  }
+
+ export default User;

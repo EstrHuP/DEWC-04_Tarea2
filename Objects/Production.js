@@ -1,14 +1,15 @@
 class Production {
     #title;
-    #nacionality;
+    #nationality;
     #publication;
     #synopsis;
     #image;
 
-    constructor(title, nacitonality = "", publication, synopsis = "", image = "") {
+    constructor(title, nationality = "", publication, synopsis = "", image = "") {
+        if (new.target === Production) throw new GlobalException("Production is an abstract object", "ProductionException"); // Clase abstracta
         if (!title || !publication) throw new GlobalException("Title and publication are obligatory", "ProductionException");
         this.#title = title;
-        this.#nacionality = nacitonality;
+        this.#nationality = nationality;
         this.#publication = publication;
         this.#synopsis = synopsis;
         this.#image = image;
@@ -20,15 +21,15 @@ class Production {
 
     set title(value) {
         if (!value) throw new GlobalException("Title cannot be empty", "ProductionException");
-        return this.#title = value;
+        this.#title = value;
     }
 
-    get nacitonality() {
-        return this.#nacionality;
+    get nationality() {
+        return this.#nationality;
     }
 
-    set nacitonality(value) {
-        return this.#nacionality = value;
+    set nationality(value) {
+        this.#nationality = value;
     }
 
     get publication() {
@@ -36,8 +37,8 @@ class Production {
     }
 
     set publication(value) {
-        if (!value) throw new GlobalException("Publication date cannot be empty", "ProductionException");
-        return this.#publication = value;
+        if (!value || !(value instanceof Date)) throw new GlobalException("Publication date cannot be empty", "ProductionException");
+        this.#publication = value;
     }
 
     get synopsis() {
@@ -45,7 +46,7 @@ class Production {
     }
 
     set synopsis(value) {
-        return this.#synopsis = value;
+        this.#synopsis = value;
     }
 
     get image() {
@@ -53,10 +54,12 @@ class Production {
     }
 
     set image(value) {
-        return this.#image = value;
+        this.#image = value;
     }
 
     toString() {
-        return `${this.#title} ${this.#nacionality} ${this.#publication.toDateString()} (${this.#synopsis}) ${this.#image} `;
+        return `${this.#title} ${this.#nationality} ${this.#publication.toDateString()} (${this.#synopsis}) ${this.#image} `;
     }
 }
+
+export default Production;
