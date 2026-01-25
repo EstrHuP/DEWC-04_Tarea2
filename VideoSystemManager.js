@@ -1,16 +1,16 @@
 import {
-  BaseException,
+  GlobalException,
   EmptyValueException,
   InvalidAccessConstructorException,
   InvalidValueException,
-} from "./Exception/GlobalException";
-import Category from "./Objects/Category";
-import Production from "./Objects/Production";
-import User from "./Objects/User";
-import Person from "./Objects/Person";
+} from "./Exception/GlobalException.js";
+import Category from "./Entities/Category.js";
+import Production from "./Entities/Production.js";
+import User from "./Entities/User.js";
+import Person from "./Entities/Person.js";
 
 // EXCEPTIONS
-class VideoSystemException extends BaseException {
+class VideoSystemException extends GlobalException {
   constructor(message = "VideoSystem Exception", fileName, lineNumber) {
     super(message, fileName, lineNumber);
     this.name = "VideoSystemException";
@@ -217,23 +217,22 @@ let VideoSystemManager = (function () {
     #defaultCategory;
     #defaultUser;
 
-    constructor() {
+    constructor(name) {
       if (!new.target) throw new InvalidAccessConstructorException();
-
-      Object.defineProperties(this, "name", {
+      this.#nameSystem = name ?? "Default name";
+      Object.defineProperty(this, "name", {
         enumerable: true,
         get() {
           return this.#nameSystem;
         },
         set(value) {
-          if (!value) throw new EmptyValueException("name");
-          if (typeof value !== "string")
-            throw new InvalidValueException("name", value);
-          this.#nameSystem.value;
+          if (!value || value.trim() === "") throw new EmptyValueException("name");
+          if (typeof value !== "string") throw new InvalidValueException("name", value);
+          this.#nameSystem = value;
         },
       });
 
-      Object.defineProperties(this, "categories", {
+      Object.defineProperty(this, "categories", {
         enumerable: true,
         get() {
           const values = this.#categories.values();
@@ -694,7 +693,7 @@ let VideoSystemManager = (function () {
   }
 
   function init() {
-    const manager = new VideoSystemManager();
+    const manager = new VideoSystemManager("Nombre sistema");
     Object.freeze(manager);
     return manager;
   }
@@ -704,7 +703,7 @@ let VideoSystemManager = (function () {
   
   return {
     // Devuelve un objeto con getInstance
-    getInstance: function () {
+    getInstance() {
       // Variable instance 'undefined' -> primera ejecución -> inicia init()
       if (!instance) {
         instance = init();
@@ -713,3 +712,5 @@ let VideoSystemManager = (function () {
     },
   };
 })();
+
+export default VideoSystemManager;
