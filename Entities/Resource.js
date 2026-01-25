@@ -1,4 +1,4 @@
-import { EmptyValueException } from '../Exception/GlobalException.js';
+import { EmptyValueException, InvalidValueException } from '../Exception/GlobalException.js';
 
 class Resource {
 

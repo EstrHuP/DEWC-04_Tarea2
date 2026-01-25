@@ -1,4 +1,4 @@
-import { AbstractClassException, EmptyValueException, GlobalException, InvalidValueException } from '../Exception/GlobalException.js';
+import { AbstractClassException, EmptyValueException, InvalidValueException } from '../Exception/GlobalException.js';
 
 class Production {
     #title;
