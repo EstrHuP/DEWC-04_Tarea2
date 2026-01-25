@@ -1,10 +1,15 @@
+import { EmptyValueException } from '../Exception/GlobalException.js';
+
 class Resource {
 
     #duration;
     #link;
 
     constructor(duration, link) {
-        if (!duration || !link) throw new GlobalException("Duration and link are obligatory", "ResourceException");
+        if (duration == null) throw new EmptyValueException("duration");
+        if (typeof duration !== "number" || duration <= 0) throw new InvalidValueException("duration", duration);
+        if (!link || link.trim() === "") throw new EmptyValueException("link");
+
         this.#duration = duration;
         this.#link = link;
     }
@@ -14,7 +19,7 @@ class Resource {
     }
 
     set duration(value) {
-        if (!value) throw new GlobalException("Duration cannot be empty", "ResourceException");
+        if (!value) throw new EmptyValueException("duration");
         this.#duration = value;
     }
 
@@ -23,7 +28,7 @@ class Resource {
     }
 
     set link(value) {
-        if (!value) throw new GlobalException("Link cannot be empty", "ResourceException");
+        if (!value) throw new EmptyValueException("link");
         this.#link = value;
     }
 

@@ -1,4 +1,5 @@
 import Production from './Production.js';
+import { GlobalException, InvalidValueException } from '../Exception/GlobalException.js';
 
 class Serie extends Production {
 
@@ -18,9 +19,9 @@ class Serie extends Production {
     }
 
      set resources(value) {
-        if (!Array.isArray(value)) throw new GlobalException("Resources must be an array");
+        if (!Array.isArray(value)) throw new InvalidValueException("resources", value);
         for (const resource of value) {
-            if (!(resource instanceof Resource)) throw new GlobalException("Resource must contain Resource object");
+            if (!(resource instanceof Resource)) throw new InvalidValueException("invalid object", resource);
         }
         this.#resources = value;
     }
@@ -30,9 +31,9 @@ class Serie extends Production {
     }
 
      set locations(value) {
-        if (!Array.isArray(value)) throw new GlobalException("Resources must be an array");
+        if (!Array.isArray(value)) throw new InvalidValueException("locations", value);
         for (const location of value) {
-            if (!(location instanceof Coordinate)) throw new GlobalException("Location must contain Coordinate object");
+            if (!(location instanceof Coordinate)) throw new InvalidValueException("invalid object", location);
         }
         this.#locations = value;
     }
@@ -42,7 +43,7 @@ class Serie extends Production {
     }
 
      set seasons(value) {
-        if (typeof value !== Number) throw new GlobalException("Location must be a Number");
+        if (typeof value !== Number) throw new InvalidValueException("seasons", value);
         this.#locations = value;
     }
 

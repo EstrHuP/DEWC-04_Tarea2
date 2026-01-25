@@ -1,13 +1,17 @@
+import { EmptyValueException, InvalidValueException } from "../Exception/GlobalException.js";
+
 class Person {
 
-    #name;
-    #lastname1;
-    #lastname2;
-    #born;
-    #picture;
+    #name; // obligatory
+    #lastname1; // obligatory
+    #lastname2; // opcional
+    #born; // obligatory
+    #picture; // opcional
 
-    constructor(name, lastname1, lastname2 = "", born, picture = "") {
-        if (!name || !lastname1 || !born) throw new GlobalException("Name, Lastname1 and Born are obligatory", "Person Exception");
+    constructor(name, lastname1, lastname2, born, picture) {
+        if (name === 'undefined' || name.trim() === "") throw new EmptyValueException("name");
+        if (lastname1 === 'undefined' || lastname1.trim() === "") throw new EmptyValueException("lastname1");
+        if (!(born instanceof Date)) throw new InvalidValueException("born", born);
         this.#name = name;
         this.#lastname1 = lastname1;
         this.#lastname2 = lastname2;
@@ -20,7 +24,7 @@ class Person {
     }
 
     set name(value) {
-        if (!value) throw new GlobalException("Name cannot be empty");
+        if (!value) throw new EmptyValueException("name");
         this.#name = value;
     }
 
@@ -29,7 +33,7 @@ class Person {
     }
 
     set lastname1(value) {
-        if (!value) throw new GlobalException("Lastname1 cannot be empty");
+        if (!value || value.trim() === "") throw new EmptyValueException("lastname1");
         this.#lastname1 = value;
     }
 
@@ -46,7 +50,7 @@ class Person {
     }
 
     set born(value) {
-        if (!value) throw new GlobalException("Born cannot be empty");
+        if (!value) throw new InvalidValueException("born", value);
         this.#born = value;
     }
 

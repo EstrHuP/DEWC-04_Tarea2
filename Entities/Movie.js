@@ -1,7 +1,7 @@
 import Production from './Production.js';
 import Resource from './Resource.js';
 import Coordinate from './Coordinate.js';
-import GlobalException from 'GlobalException.js';
+import { EmptyValueException, InvalidValueException } from '../Exception/GlobalException.js';
 
 class Movie extends Production {
 
@@ -19,7 +19,8 @@ class Movie extends Production {
     }
 
     set resource(value) {
-        if (!(value instanceof Resource)) throw new GlobalException("Resource must to be Resource object", "MovieException");
+        if (!value) throw new EmptyValueException("resource");
+        if (!(value instanceof Resource)) throw new InvalidValueException("resource", value);        
         this.#resource = value;
     }
 
@@ -28,9 +29,9 @@ class Movie extends Production {
     }
 
     set locations(value) {
-        if (!Array.isArray(value)) throw new GlobalException("Locations must be an array");
+        if (!Array.isArray(value)) throw new InvalidValueException("locations", value);
         for (const location of value) {
-            if (!(location instanceof Coordinate)) throw new GlobalException("Locations must contain Coordinate objects");
+            if (!(location instanceof Coordinate)) throw new InvalidValueException("locations item", location);
         }
         this.#locations = value;
     }

@@ -1,9 +1,9 @@
-import { EmptyValueException, InvalidAccessConstructorException } from "../Exception/GlobalException";
+import { EmptyValueException, InvalidAccessConstructorException } from "../Exception/GlobalException.js";
 
 class Category {
 
-    #name;
-    #description;
+    #name; // obligatory
+    #description; // opcional
 
     constructor(name, description = "") {
         if (!new.target) throw new InvalidAccessConstructorException();
@@ -17,7 +17,7 @@ class Category {
     }
 
     set name(value) {
-        if (!value) throw new GlobalException("Name cannot be empty", "CategoryException");
+        if (value === 'undefined' || value === '') throw new EmptyValueException("name");
         this.#name = value;
     }
 
@@ -30,7 +30,7 @@ class Category {
     }
 
     toString() {
-        return `${this.#name} ${this.#description}`;
+        return "Category: " + this.#name + "(" + this.#description + ")";
     }
 }
 

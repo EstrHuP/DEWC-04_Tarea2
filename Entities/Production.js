@@ -1,3 +1,5 @@
+import { AbstractClassException, EmptyValueException, GlobalException, InvalidValueException } from '../Exception/GlobalException.js';
+
 class Production {
     #title;
     #nationality;
@@ -6,8 +8,10 @@ class Production {
     #image;
 
     constructor(title, nationality = "", publication, synopsis = "", image = "") {
-        if (new.target === Production) throw new GlobalException("Production is an abstract object", "ProductionException"); // Clase abstracta
-        if (!title || !publication) throw new GlobalException("Title and publication are obligatory", "ProductionException");
+        if (new.target === Production) throw new AbstractClassException("Production"); // Clase abstracta
+        if (!title || title.trim() === "") throw new EmptyValueException("title");
+        if (!publication) throw new EmptyValueException("publication");
+        if (!(publication instanceof Date)) throw new InvalidValueException("publication", publication);
         this.#title = title;
         this.#nationality = nationality;
         this.#publication = publication;
@@ -20,7 +24,7 @@ class Production {
     }
 
     set title(value) {
-        if (!value) throw new GlobalException("Title cannot be empty", "ProductionException");
+        if (!value) throw new EmptyValueException("title");
         this.#title = value;
     }
 
@@ -37,7 +41,7 @@ class Production {
     }
 
     set publication(value) {
-        if (!value || !(value instanceof Date)) throw new GlobalException("Publication date cannot be empty", "ProductionException");
+        if (!value || !(value instanceof Date)) throw new InvalidValueException("publication", value);
         this.#publication = value;
     }
 
