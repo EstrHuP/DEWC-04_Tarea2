@@ -1,11 +1,9 @@
 class GlobalException extends Error {
-
     constructor(message = "", fileName, lineNumber) {
         super(message, fileName, lineNumber);
         this.name = "GlobalException";
         if (Error.captureStackTrace) Error.captureStackTrace(this, GlobalException);
     }
-    
 }
 
 // Acceso invalido a constructor
@@ -17,7 +15,7 @@ class InvalidAccessConstructorException extends GlobalException {
 }
 
 // Excepción personalizada para indicar valores vacios.
-class EmptyValueException extends BaseException {
+class EmptyValueException extends GlobalException {
   constructor (param, fileName, lineNumber){
     super("Error: The parameter " + param + " can't be empty.", fileName, lineNumber);
     this.param = param;
@@ -26,7 +24,7 @@ class EmptyValueException extends BaseException {
 }
 
 // Validación de parámetros. Reutilizables en todas las clases
-class ParameterValidationException extends BaseException {
+class ParameterValidationException extends GlobalException {
   constructor (param, fileName, lineNumber){
     super("Error: The parameter " + param + " is invalid.", fileName, lineNumber);
     this.param = param;
@@ -35,7 +33,7 @@ class ParameterValidationException extends BaseException {
 }
 
 // Excepción de valor inválido
-class InvalidValueException extends BaseException {
+class InvalidValueException extends GlobalException {
   constructor (param, value, fileName, lineNumber){
     super(`Error: The paramenter ${param} has an invalid value. (${param}: ${value})`, fileName, lineNumber);
     this.param = param;
@@ -44,7 +42,7 @@ class InvalidValueException extends BaseException {
 }
 
 // Excepción personalizada para clases abstractas.
-class AbstractClassException extends BaseException {
+class AbstractClassException extends GlobalException {
   constructor (className, fileName, lineNumber){
     super(`Error: The class  ${className} is abstract.`, fileName, lineNumber);
     this.className = className;
@@ -52,9 +50,12 @@ class AbstractClassException extends BaseException {
   }
 }
 
-export {BaseException,
+export default GlobalException;
+export {
+  GlobalException,
 	InvalidAccessConstructorException,
 	EmptyValueException,
 	ParameterValidationException,
 	InvalidValueException,
-	AbstractClassException };
+	AbstractClassException 
+};
